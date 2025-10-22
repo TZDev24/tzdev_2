@@ -1,0 +1,32 @@
+html {
+  background-color: rgb(16, 16, 16);
+  color: white;
+  font-family: monospace, sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: rgb(0, 128, 255);
+  font-weight: bold;
+}
+
+a:hover {
+  animation-name: link-blue-background;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+.navbar-link {
+  padding: 4px;
+}
+
+@keyframes link-blue-background {
+  100% {
+    background-color: rgb(0, 160, 255);
+    color: black;
+  }
+}
+
+p {
+  max-width: 50%;
+}
