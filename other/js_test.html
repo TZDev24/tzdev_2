@@ -5,6 +5,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>JavaScript canvas test</title>
+
 <header>
   <h1 id="site-url-header">TZDev.xyz</h1>
 
@@ -30,17 +32,5 @@
 
 <footer></footer>
 
-<script>
-  let name="Tourist";
-  console.log(`Hello, I am ${name}`);
-
-  const canvas = document.querySelector(".myCanvas");
-  const width = (canvas.width = window.innerWidth);
-  const height = (canvas.height = window.innerHeight);
-
-  const ctx = canvas.getContext("2d");
-
-  ctx.fillStyle = "black";
-  ctx.fillRect(0, 0, width, height);
-</script>
+<script src="js_test.js"></script>
 
