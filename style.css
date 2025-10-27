@@ -41,3 +41,11 @@ a:hover {
 p {
   max-width: 40%;
 }
+
+
+/* The CSS below here is for specific files*/
+/* input_test.html */
+#input-test-info-display {
+  display: flex;
+  justify-content: space-evenly;
+}

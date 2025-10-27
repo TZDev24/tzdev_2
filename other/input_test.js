@@ -2,14 +2,14 @@ console.log("Input test script loaded successfully");
 
 // Get the actual canvas element
 const canvas = document.querySelector(".input-test-canvas");
-const width = (canvas.width = window.innerWidth);
-const height = (canvas.height = window.innerHeight);
+let canvasWidth = (canvas.width = window.innerWidth);
+let canvasHeight = (canvas.height = window.innerHeight);
 
 const context = canvas.getContext("2d");
 
 // Fill the canvas with a black background
 context.fillStyle = "black";
-context.fillRect(0, 0, width, height);
+context.fillRect(0, 0, canvasWidth, canvasHeight);
 
 // We'll display some data as well. Write some stuff on the screen
 context.font = "24px monospace";
@@ -23,30 +23,31 @@ let boxPosY = 0;
 let boxSizeX = 128;
 let boxSizeY = 128;
 
-let boxColor = "orange";
+let boxColor = "#FFA500";
 
 function redrawSquare() {
   // Refill the background to remove previous drawings
   context.fillStyle = "black";
-  context.fillRect(0, 0, width, height);
+  context.fillRect(0, 0, canvasWidth, canvasHeight);
 
   // Redraw the square on top of the newly-redrawn background
   context.fillStyle = boxColor;
   context.fillRect(boxPosX, boxPosY, boxSizeX, boxSizeY);
 }
 
-function redrawInfo() {
-  // Make the text white
-  context.fillStyle = "white";
-  
-  // Start drawing some info
-  context.fillText(`Box pos X: ${boxPosX}`, 192, 64);
-  context.fillText(`Box pos Y: ${boxPosY}`, 192, 96);
+// Instead of drawing text on the canvas, we'll use p elements to show info
+// Get the elements here instead of doing this in the function every time. Yes, we care about performance this much.
+let boxPosX_p = document.getElementById("canvastest-box-pos-x");
+let boxPosY_p = document.getElementById("canvastest-box-pos-y");
+
+function updateInfo() {
+  boxPosX_p.textContent = `Box pos X: ${boxPosX}`;
+  boxPosY_p.textContent = `Box pos Y: ${boxPosY}`;
 }
 
 // Call the function a first time here
 redrawSquare();
-redrawInfo();
+updateInfo();
 
 // Let's do some input handling
 const body = document.body;
@@ -85,7 +86,7 @@ body.addEventListener("keydown", (event) => {
   redrawSquare();
 
   // Tell ourselves where exactly it's positioned at. We have to update this every time the square is moved and the screen is updated
-  redrawInfo();
+  updateInfo();
 });
 
 body.addEventListener("keyup", (event) => {
@@ -98,4 +99,28 @@ body.addEventListener("keyup", (event) => {
   else if (lowerKey === 's') {
     console.log("S key was released");
   }
+});
+
+// Canvas size should adjust to the browser window's dimensions
+window.addEventListener("resize", function() {
+  console.log(`Window resized. New dimensions: (${window.innerWidth}, ${window.innerHeight})`);
+
+  canvasWidth = (canvas.width = window.innerWidth);
+  canvasHeight = (canvas.height = window.innerHeight);
+
+  context.fillStyle = "black";
+  context.clearRect(0, 0, canvasWidth, canvasHeight);
+  context.fillRect(0, 0, canvasWidth, canvasHeight);
+
+  redrawSquare();
+});
+
+let colorPicker = document.getElementById("current-square-color");
+
+// There's "onchange" and "input." Input is the one that updates in real time. "onchange" upates after
+colorPicker.addEventListener("input", function(event) {
+  console.log(`Color changed. New color: ${event.target.value}`);
+  boxColor = event.target.value;
+
+  redrawSquare();
 });
