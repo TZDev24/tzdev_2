@@ -54,23 +54,23 @@ const body = document.body;
 body.addEventListener("keydown", (event) => {
   // Convert event key to lowercase, then it doesn't matter if user has caps lock on or not
   let lowerKey = event.key.toLowerCase();
-  // console.log(`A key was pressed (${lowerKey})`);
+  console.log(`A key was pressed (${lowerKey})`);
 
-  if (lowerKey === 'w') {
+  if (lowerKey === 'w' || lowerKey == "arrowup") {
     console.log("W key was pressed");
     boxPosY -= 16;
   }
-  if (lowerKey === 's') {
+  if (lowerKey === 's' || lowerKey == "arrowdown") {
     console.log("S key was pressed");
     boxPosY += 16;
   }
 
-  if (lowerKey === 'a') {
+  if (lowerKey === 'a' || lowerKey == "arrowleft") {
     console.log("A key was pressed");
     boxPosX -= 16;
   }
 
-  if (lowerKey === 'd') {
+  if (lowerKey === 'd' || lowerKey == "arrowright") {
     console.log("D key was pressed");
     boxPosX += 16;
   }
