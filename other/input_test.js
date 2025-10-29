@@ -89,6 +89,24 @@ body.addEventListener("keydown", (event) => {
   updateInfo();
 });
 
+// The mouse should do stuff too
+let mouseHeldDown = false;
+canvas.onmousedown = function(event) {
+  mouseHeldDown = true;
+  console.log("Mouse was pressed");
+}
+
+canvas.onmouseup = function(event) {
+  mouseHeldDown = false;
+  console.log("Mouse was released");
+}
+
+canvas.onmousemove = function(event) {
+  if (mouseHeldDown) {
+    console.log("Mouse is being moved around canvas while held down");
+  }
+}
+
 body.addEventListener("keyup", (event) => {
   let lowerKey = event.key.toLowerCase();
   // console.log(`A key was released (${lowerKey})`);
