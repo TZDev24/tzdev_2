@@ -91,6 +91,7 @@ body.addEventListener("keydown", (event) => {
 
 // The mouse should do stuff too
 let mouseHeldDown = false;
+
 canvas.onmousedown = function(event) {
   mouseHeldDown = true;
   console.log("Mouse was pressed");
