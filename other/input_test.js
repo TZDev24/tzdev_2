@@ -35,19 +35,30 @@ function redrawSquare() {
   context.fillRect(boxPosX, boxPosY, boxSizeX, boxSizeY);
 }
 
-// Instead of drawing text on the canvas, we'll use p elements to show info
-// Get the elements here instead of doing this in the function every time. Yes, we care about performance this much.
-let boxPosX_p = document.getElementById("canvastest-box-pos-x");
-let boxPosY_p = document.getElementById("canvastest-box-pos-y");
+let bShowPos = false;
 
-function updateInfo() {
-  boxPosX_p.textContent = `Box pos X: ${boxPosX}`;
-  boxPosY_p.textContent = `Box pos Y: ${boxPosY}`;
+function drawInfo(bShouldDraw) {
+  if (bShouldDraw) {
+    let xPosTextPos_X = canvasWidth - (canvas.width / 6);
+    let xPosTextPos_Y = canvasHeight - canvasHeight + (canvasHeight / 10);
+
+    let yPosTextPos_X = canvasWidth - (canvasWidth / 6);
+    let yPosTextPos_Y = canvasHeight - canvasHeight + (canvasHeight / 8);
+
+    // Set the font and color to what we want 
+    context.font = "24px sans-serif";
+    context.fillStyle = "white";
+
+    context.fillText(`Box pos X: ${boxPosX}`, xPosTextPos_X, xPosTextPos_Y);
+    context.fillText(`Box pos Y: ${boxPosY}`, yPosTextPos_X, yPosTextPos_Y);
+    boxPosX_p.textContent = `Box pos X: ${boxPosX}`;
+    boxPosY_p.textContent = `Box pos Y: ${boxPosY}`;
+  }
 }
 
 // Call the function a first time here
 redrawSquare();
-updateInfo();
+drawInfo(bShowPos);
 
 // Let's do some input handling
 const body = document.body;
@@ -56,6 +67,8 @@ body.addEventListener("keydown", (event) => {
   let lowerKey = event.key.toLowerCase();
   console.log(`A key was pressed (${lowerKey})`);
 
+
+  // MOVEMENT
   if (lowerKey === 'w' || lowerKey == "arrowup") {
     console.log("W key was pressed");
     boxPosY -= 16;
@@ -75,6 +88,12 @@ body.addEventListener("keydown", (event) => {
     boxPosX += 16;
   }
 
+  // SHOWING INFORMATION
+  if (lowerKey == "f4") {
+    console.log("F4 pressed");
+    bShowPos = !bShowPos; // Simple way of inverting boolean variable
+  }
+
   
   // Controls for other things besides moving around
   if (lowerKey === 'r') {
@@ -86,7 +105,7 @@ body.addEventListener("keydown", (event) => {
   redrawSquare();
 
   // Tell ourselves where exactly it's positioned at. We have to update this every time the square is moved and the screen is updated
-  updateInfo();
+  drawInfo(bShowPos);
 });
 
 // The mouse should do stuff too
@@ -120,7 +139,7 @@ body.addEventListener("keyup", (event) => {
   }
 });
 
-// Canvas size should adjust to the browser window's dimensions
+// Canvas size should adjust to the browser window's dimensions in real time
 window.addEventListener("resize", function() {
   console.log(`Window resized. New dimensions: (${window.innerWidth}, ${window.innerHeight})`);
 
@@ -132,6 +151,7 @@ window.addEventListener("resize", function() {
   context.fillRect(0, 0, canvasWidth, canvasHeight);
 
   redrawSquare();
+  drawInfo(bShowPos);
 });
 
 let colorPicker = document.getElementById("current-square-color");
