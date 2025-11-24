@@ -51,8 +51,6 @@ function drawInfo(bShouldDraw) {
 
     context.fillText(`Box pos X: ${boxPosX}`, xPosTextPos_X, xPosTextPos_Y);
     context.fillText(`Box pos Y: ${boxPosY}`, yPosTextPos_X, yPosTextPos_Y);
-    boxPosX_p.textContent = `Box pos X: ${boxPosX}`;
-    boxPosY_p.textContent = `Box pos Y: ${boxPosY}`;
   }
 }
 
@@ -62,6 +60,10 @@ drawInfo(bShowPos);
 
 // Let's do some input handling
 const body = document.body;
+
+bCommandInputMode = false;
+commandString = "";
+
 body.addEventListener("keydown", (event) => {
   // Convert event key to lowercase, then it doesn't matter if user has caps lock on or not
   let lowerKey = event.key.toLowerCase();
@@ -100,6 +102,11 @@ body.addEventListener("keydown", (event) => {
     console.log("R key was pressed. Resetting position");
     boxPosX = 0;
     boxPosY = 0;
+  }
+
+  if (lowerKey == '`') {
+    console.log("Tilde key pressed (`). Allow us to type commands like in Source engine or something");
+    bCommandInputMode = !bCommandInputMode;
   }
 
   redrawSquare();
